@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* --- Design System: Legora Trust-Architect --- */
+
+@theme {
+  /* Primary — Soft Legal Blue (Matching Landing Page Accent #6C8EEF) */
+  --color-primary-50: #f0f4ff;
+  --color-primary-100: #e0e9fe;
+  --color-primary-200: #c0d4fd;
+  --color-primary-300: #9abafd;
+  --color-primary-400: #6C8EEF;
+  /* Main Landing Accent */
+  --color-primary-500: #4f74e8;
+  --color-primary-600: #3856d3;
+  --color-primary-700: #2a41a8;
+  --color-primary-800: #253686;
+  --color-primary-900: #06060B;
+
+  /* Accent — Trust Green */
+  --color-accent-400: #4ade80;
+  --color-accent-500: #22c55e;
+  --color-accent-600: #16a34a;
+
+  /* Danger — Violation Red */
+  --color-danger-400: #f87171;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+
+  /* Warning — Caution Amber */
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+
+  /* Surface — Dark Mode (Keeping for dark elements) */
+  --color-surface-950: #06060B;
+  --color-surface-900: #0F0F1A;
+  --color-surface-800: #14142A;
+  --color-surface-700: #1E1E32;
+  --color-surface-600: #2A2A45;
+  --color-surface-500: #555570;
+  --color-surface-400: #8888A0;
+  --color-surface-300: #A0A0B8;
+  --color-surface-200: #C0C0D0;
+  --color-surface-100: #E0E0E5;
+  --color-surface-50: #F0F0F5;
+
+  /* Cream Theme (New) */
+  --color-cream-50: #ffffff;
+  --color-cream-100: #F5F5F0;
+  /* The requested cream BG */
+  --color-cream-200: #e6e6e2;
+  --color-cream-300: #d6d6d2;
+  --color-cream-900: #1A1A2E;
+  /* Dark text for cream bg */
+
+  /* Fonts */
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* --- Global Resets & Typography --- */
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  /* Default to dark for landing, but app will override */
+  background-color: var(--color-surface-950);
+  color: var(--color-surface-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Utility for Display Font */
+.font-display {
+  font-family: var(--font-display);
+}

@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  # --- Backend: FastAPI ---
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app # Hot reload in dev
+    env_file:
+      - ./backend/.env
+    command: [ "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload" ]
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # --- Frontend: React (Vite Dev Server) ---
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  # --- Frontend Dev Mode (use instead of production frontend) ---
+  frontend-dev:
+    image: node:20-slim
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # Prevent host node_modules from overwriting
+    command: [ "npm", "run", "dev", "--", "--host" ]
+    depends_on:
+      backend:
+        condition: service_healthy
+    profiles:
+      - dev
