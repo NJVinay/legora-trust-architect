@@ -6,7 +6,6 @@ All secrets and environment-specific values are loaded from environment variable
 import json
 from functools import lru_cache
 
-from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -34,28 +33,19 @@ class Settings(BaseSettings):
 
     # --- CORS (Req #1) ---
     # Override via CORS_ORIGINS env var for different environments.
-    # Accepts: JSON array string '["https://example.com"]'
-    #          or comma-separated string 'https://a.com,https://b.com'
-    CORS_ORIGINS: list[str] = [
-        "http://localhost:5173",    # Vite dev server
-        "http://localhost:3000",    # Frontend container
-    ]
+    # Accepts: JSON array '["https://example.com"]' or comma-separated 'https://a.com,https://b.com'
+    CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000"
 
-    @field_validator("CORS_ORIGINS", mode="before")
-    @classmethod
-    def parse_cors_origins(cls, v):
-        """Parse CORS_ORIGINS from env var string into a list."""
-        if isinstance(v, str):
-            v = v.strip()
-            # Try JSON array first: '["https://example.com"]'
-            if v.startswith("["):
-                try:
-                    return json.loads(v)
-                except json.JSONDecodeError:
-                    pass
-            # Fall back to comma-separated: 'https://a.com,https://b.com'
-            return [origin.strip() for origin in v.split(",") if origin.strip()]
-        return v
+    @property
+    def cors_origins_list(self) -> list[str]:
+        """Parse CORS_ORIGINS string into a list of origins."""
+        v = self.CORS_ORIGINS.strip()
+        if v.startswith("["):
+            try:
+                return json.loads(v)
+            except json.JSONDecodeError:
+                pass
+        return [origin.strip() for origin in v.split(",") if origin.strip()]
 
     # --- Security (Req #5) ---
     API_KEY: str = ""  # Set via env var; empty = auth disabled (dev only)
