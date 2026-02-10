@@ -1,0 +1,29 @@
+services:
+  # Legora Backend API
+  - type: web
+    name: legora-backend
+    runtime: docker
+    repo: https://github.com/NJVinay/legora-trust-architect
+    branch: main
+    rootDir: backend
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: PROJECT_NAME
+        value: Legora Trust-Architect
+      - key: ALLOWED_REDIRECT_DOMAINS
+        value: localhost,legora.yourdomain.com
+      # User must populate these in Render Dashboard
+      - key: AZURE_OPENAI_API_KEY
+        sync: false
+      - key: AZURE_OPENAI_ENDPOINT
+        sync: false
+      - key: AZURE_OPENAI_DEPLOYMENT_NAME
+        value: gpt-4o
+      - key: JWT_SECRET
+        generateValue: true
+      - key: API_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: '["*"]' # Lock this down to your Netlify URL after deployment!

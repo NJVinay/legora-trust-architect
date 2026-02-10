@@ -111,16 +111,19 @@ Legora Trust-Architect is a cutting-edge legal AI prototype designed to demonstr
 
 ## 🌍 Deployment
 
-### 1. Backend (Container Platform)
+### 1. Backend (Container Platform: Render)
 
-The backend requires a Python environment with `faiss-cpu` (vector DB). Deploy the `backend/` folder to a container platform like **Render**, **Railway**, or **DigitalOcean App Platform**.
+The backend requires a Python environment with `faiss-cpu` (vector DB). We recommend **Render** for easy Docker deployment.
 
-- **Dockerfile**: Provided in `backend/Dockerfile`.
-- **Environment Variables**:
-  - `AZURE_OPENAI_API_KEY`: Your key.
-  - `AZURE_OPENAI_ENDPOINT`: Your endpoint.
-  - `JWT_SECRET`: A strong secret string.
-  - `CORS_ORIGINS`: Add your Netlify frontend URL (e.g., `["https://your-site.netlify.app"]`).
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/NJVinay/legora-trust-architect)
+
+1. Click the button above.
+2. Render will read the `render.yaml` blueprint.
+3. Input your **Azure OpenAI Keys** when prompted.
+4. Render will deploy the API and give you a URL (e.g., `https://legora-backend-abc.onrender.com`).
+5. **Copy this URL** — you will need it for the Frontend setup!
+
+**Alternative**: Deploy the `backend/` folder to any container platform (Railway, DigitalOcean) using the `backend/Dockerfile`.
 
 ### 2. Frontend (Netlify)
 
