@@ -3,7 +3,7 @@ uvicorn[standard]==0.40.0
 gunicorn==22.0.0
 pydantic==2.12.5
 pydantic-settings==2.12.0
-openai==1.51.0
+openai>=1.75.0
 python-dotenv==1.2.1
 faiss-cpu==1.13.2
 tiktoken==0.12.0
