@@ -3,8 +3,11 @@ Application configuration using Pydantic Settings.
 All secrets and environment-specific values are loaded from environment variables.
 """
 
-from pydantic_settings import BaseSettings
+import json
 from functools import lru_cache
+
+from pydantic import field_validator
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -30,12 +33,29 @@ class Settings(BaseSettings):
     LLM_MAX_TOKENS: int = 2048
 
     # --- CORS (Req #1) ---
-    # Only allow requests from known prod and dev origins.
     # Override via CORS_ORIGINS env var for different environments.
+    # Accepts: JSON array string '["https://example.com"]'
+    #          or comma-separated string 'https://a.com,https://b.com'
     CORS_ORIGINS: list[str] = [
         "http://localhost:5173",    # Vite dev server
         "http://localhost:3000",    # Frontend container
     ]
+
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v):
+        """Parse CORS_ORIGINS from env var string into a list."""
+        if isinstance(v, str):
+            v = v.strip()
+            # Try JSON array first: '["https://example.com"]'
+            if v.startswith("["):
+                try:
+                    return json.loads(v)
+                except json.JSONDecodeError:
+                    pass
+            # Fall back to comma-separated: 'https://a.com,https://b.com'
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return v
 
     # --- Security (Req #5) ---
     API_KEY: str = ""  # Set via env var; empty = auth disabled (dev only)
@@ -57,7 +77,6 @@ class Settings(BaseSettings):
     # --- Redirect Allowlist (Req #2) ---
     ALLOWED_REDIRECT_DOMAINS: list[str] = [
         "localhost",
-        "legora.yourdomain.com",
     ]
 
     model_config = {

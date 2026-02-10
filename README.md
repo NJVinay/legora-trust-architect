@@ -1,143 +1,137 @@
 # Legora Trust-Architect
 
-**Neuro-Symbolic Legal AI Agent**
+## Neuro-Symbolic Legal AI Agent
 
-Legora Trust-Architect is a cutting-edge legal AI prototype designed to demonstrate **Neuro-Symbolic Artificial Intelligence** in the context of contract review and validation. Unlike standard LLM chat interfaces, Trust-Architect combines the creative power of Large Language Models (Azure OpenAI GPT-4) with the deterministic rigor of symbolic logic (Pydantic/Python) to ensure compliance, reduce hallucinations, and provide verifiable legal analysis.
-
-![Deep Legal Blue](https://placehold.co/1200x400/06060B/6C8EEF?text=Legora+Trust-Architect)
+Legora Trust-Architect is a legal AI prototype that demonstrates **Neuro-Symbolic Artificial Intelligence** for contract review and validation. It combines Large Language Models (Azure OpenAI GPT-4) with deterministic symbolic logic (Pydantic/Python) to ensure compliance, reduce hallucinations, and provide verifiable legal analysis.
 
 ## 🚀 Features
 
-- **Neuro-Symbolic Validation**: Every AI-generated clause is cross-checked against hard coded constraints (jurisdiction rules, forbidden clauses, mandatory liability caps).
+- **Neuro-Symbolic Validation**: AI-generated clauses are cross-checked against symbolic constraints (jurisdiction rules, forbidden clauses, mandatory liability caps).
 - **Stateless Session Management**: JWT-based authentication for secure, transparent API interactions.
-- **Client-Side Routing**: Seamless transition between the high-trust Marketing Landing Page (`/`) and the Agent Dashboard (`/app`).
-- **Real-time Agent Visualization**: Watch the agent "think" as it moves through states: `Retrieving` -> `Drafting` -> `Validating` -> `Correcting`.
-- **modern Design System**:
-  - **Landing Page**: Immersive "Dark Mode" aesthetic with glassmorphism and motion effects.
-  - **Application**: Professional "Cream" theme (`#F5F5F0`) mimicking high-end legal stationery.
+- **Real-time Agent Visualization**: Watch the agent think as it moves through states: `Retrieving` → `Drafting` → `Validating` → `Correcting`.
+- **Dual Design System**:
+  - **Landing Page**: Immersive dark mode aesthetic with glassmorphism and motion effects.
+  - **Application**: Professional cream theme mimicking high-end legal stationery.
 
 ## 🛠️ Tech Stack
 
 ### Backend (Python)
 
-- **FastAPI**: High-performance async API framework.
-- **Azure OpenAI**: Enterprise-grade LLM integration.
-- **Pydantic**: Data validation and symbolic constraints.
-- **SlowAPI**: Rate limiting for security.
-- **PyJWT**: Secure token-based authentication.
+- **FastAPI** — High-performance async API framework
+- **Azure OpenAI** — Enterprise-grade LLM integration
+- **Pydantic** — Data validation and symbolic constraints
+- **SlowAPI** — Rate limiting
+- **PyJWT** — Token-based authentication
 
 ### Frontend (TypeScript)
 
-- **React 19**: Latest React features.
-- **Vite**: Blazing fast build tool.
-- **Tailwind CSS v4**: Utility-first styling with a custom design system.
-- **Framer Motion**: Smooth, complex animations.
-- **React Router DOM**: Client-side routing.
+- **React 19** — Latest React features
+- **Vite** — Fast build tool
+- **Tailwind CSS v4** — Utility-first styling
+- **Framer Motion** — Smooth animations
+- **React Router DOM** — Client-side routing
 
-## 📦 Installation
+## 📦 Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
 - Python 3.10+
-- Azure OpenAI Service Key
+- Azure OpenAI API Key
 
-### Backend Setup
+### Backend
 
-1. Navigate to `backend/`:
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+pip install -r requirements.txt
+```
 
-   ```bash
-   cd backend
-   ```
+Create `backend/.env` (see `backend/.env.example`):
 
-2. Create virtual environment:
+```env
+AZURE_OPENAI_API_KEY=your_key
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
+AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o
+JWT_SECRET=your_secure_random_secret
+API_KEY=your_api_key
+CORS_ORIGINS=http://localhost:5173
+```
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # or venv\Scripts\activate on Windows
-   ```
+```bash
+uvicorn app.main:app --reload
+```
 
-3. Install dependencies:
+### Frontend
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+cd frontend
+npm install
+```
 
-4. Create `.env` file:
+Create `frontend/.env`:
 
-   ```env
-   AZURE_OPENAI_API_KEY=your_key
-   AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
-   AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o
-   API_V1_STR=/api/v1
-   PROJECT_NAME="Legora Trust-Architect"
-   CORS_ORIGINS=["http://localhost:5173"]
-   JWT_SECRET=your_super_secret_key
-   API_KEY=your_client_api_key
-   ```
+```env
+VITE_API_KEY=your_api_key
+```
 
-5. Run server:
+```bash
+npm run dev
+```
 
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-
-### Frontend Setup
-
-1. Navigate to `frontend/`:
-
-   ```bash
-   cd frontend
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Create `.env` file:
-
-   ```env
-   VITE_API_URL=http://localhost:8000/api/v1
-   VITE_API_KEY=your_client_api_key
-   ```
-
-4. Run development server:
-
-   ```bash
-   npm run dev
-   ```
+The frontend dev server proxies `/api` requests to `http://localhost:8000` automatically via Vite.
 
 ## 🌍 Deployment
 
-### Step 1: Backend → Render
+### Backend (Container Platform)
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/NJVinay/legora-trust-architect)
+The backend is containerized via Docker. Deploy to any container platform (Render, Railway, DigitalOcean, etc.).
 
-1. Click the button above — Render reads `render.yaml` automatically.
-2. Enter your **Azure OpenAI API Key** and **Endpoint** when prompted.
-3. Set `CORS_ORIGINS` to your future Netlify URL (e.g., `["https://your-site.netlify.app"]`).
-4. Deploy. Copy the backend URL (e.g., `https://legora-backend-abc.onrender.com`).
+**Required environment variables:**
 
-### Step 2: Frontend → Netlify
+| Variable | Description |
+|---|---|
+| `AZURE_OPENAI_API_KEY` | Your Azure OpenAI API key |
+| `AZURE_OPENAI_ENDPOINT` | Your Azure OpenAI endpoint URL |
+| `AZURE_OPENAI_DEPLOYMENT_NAME` | Model deployment name (e.g., `gpt-4o`) |
+| `JWT_SECRET` | A strong random string for signing tokens |
+| `API_KEY` | API key for authenticating frontend requests |
+| `CORS_ORIGINS` | Allowed origins (e.g., `https://your-frontend.netlify.app`) |
 
-1. Import this repository on [Netlify](https://app.netlify.com/).
-2. Netlify auto-detects settings from `netlify.toml`:
-   - **Base directory**: `frontend`
-   - **Build command**: `npm run build`
-   - **Publish directory**: `dist`
-3. Add **Environment Variables** in Netlify Site Settings:
-   - `VITE_API_URL` = your Render backend URL (e.g., `https://legora-backend-abc.onrender.com`)
-   - `VITE_API_KEY` = the API key generated by Render
-4. Deploy!
+A `render.yaml` blueprint is included for one-click Render deployment.
+
+### Frontend (Static Host)
+
+The frontend is a static React SPA. Deploy to any static host (Netlify, Vercel, Cloudflare Pages, etc.).
+
+A `netlify.toml` is included with build settings and SPA routing rules.
+
+**Required environment variables (set at build time):**
+
+| Variable | Description |
+|---|---|
+| `VITE_API_URL` | Your deployed backend URL (e.g., `https://your-backend.onrender.com`) |
+| `VITE_API_KEY` | The same API key configured on the backend |
 
 ## 🛡️ Security
 
 - **Input Validation**: All inputs validated via Pydantic models.
 - **Rate Limiting**: Global and per-endpoint limits to prevent abuse.
-- **CORS Policy**: Strict origin checks.
-- **Security Headers**: Helmet functionality for HTTP security.
+- **CORS Policy**: Configurable origin allowlist.
+- **API Key Auth**: All API routes require `X-API-Key` header.
+- **JWT Tokens**: Short-lived access tokens with refresh rotation.
+- **Production Safety**: Startup check prevents running with default secrets.
+- **Error Handling**: Generic error messages in production — no stack traces leaked.
+
+## 🐳 Local Development (Docker)
+
+```bash
+docker compose up --build
+```
+
+This starts both the backend (port 8000) and frontend (port 5173) with hot reload.
 
 ---
+
 *Built by Vinay for the Agentic AI Future.*
