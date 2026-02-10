@@ -1,6 +1,6 @@
 # Legora Trust-Architect
 
-## Neuro-Symbolic Legal AI Agent
+## Neuro-Symbolic Legal AI Agent (Test it live: (Live Demo)[https://legorafrontend.netlify.app/])
 
 Legora Trust-Architect is a legal AI prototype that demonstrates **Neuro-Symbolic Artificial Intelligence** for contract review and validation. It combines Large Language Models (Azure OpenAI GPT-4) with deterministic symbolic logic (Pydantic/Python) to ensure compliance, reduce hallucinations, and provide verifiable legal analysis.
 
