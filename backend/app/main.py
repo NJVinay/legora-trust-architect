@@ -42,6 +42,15 @@ limiter = Limiter(key_func=get_remote_address, default_limits=[settings.RATE_LIM
 async def lifespan(app: FastAPI):
     """Startup/shutdown lifecycle events."""
     logger.info("Starting %s v%s", settings.APP_NAME, settings.APP_VERSION)
+
+    # Security Check: Prevent production startup with default JWT secret
+    if not settings.DEBUG and settings.JWT_SECRET == "change-me-in-production":
+        logger.critical("FATAL: Attempting to start production server with default JWT_SECRET.")
+        raise RuntimeError("Security configuration error: JWT_SECRET must be changed in production.")
+    
+    if settings.JWT_SECRET == "change-me-in-production":
+        logger.warning("SECURITY WARNING: Using default JWT_SECRET. This is unsafe for production.")
+
     try:
         load_documents()
         logger.info("Source documents loaded successfully")
