@@ -1,5 +1,5 @@
 services:
-  # Legora Backend API
+  # Legora Backend API (Deploy to Render)
   - type: web
     name: legora-backend
     runtime: docker
@@ -10,11 +10,6 @@ services:
     envVars:
       - key: PORT
         value: 8000
-      - key: PROJECT_NAME
-        value: Legora Trust-Architect
-      - key: ALLOWED_REDIRECT_DOMAINS
-        value: localhost,legora.yourdomain.com
-      # User must populate these in Render Dashboard
       - key: AZURE_OPENAI_API_KEY
         sync: false
       - key: AZURE_OPENAI_ENDPOINT
@@ -26,15 +21,4 @@ services:
       - key: API_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        value: '["*"]' # Update this after deployment!
-
-  # Legora Frontend (Docker Web Service)
-  - type: web
-    name: legora-frontend
-    runtime: docker
-    repo: https://github.com/NJVinay/legora-trust-architect
-    branch: main
-    rootDir: frontend
-    envVars:
-      - key: BACKEND_URL
-        value: http://legora-backend:8000
+        sync: false
