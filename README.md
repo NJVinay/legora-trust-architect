@@ -116,9 +116,5 @@ Legora Trust-Architect is a cutting-edge legal AI prototype designed to demonstr
 - **CORS Policy**: Strict origin checks.
 - **Security Headers**: Helmet functionality for HTTP security.
 
-## 📄 License
-
-MIT
-
 ---
 *Built by Vinay for the Agentic AI Future.*
