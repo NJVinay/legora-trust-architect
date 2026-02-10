@@ -26,4 +26,23 @@ services:
       - key: API_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        value: '["*"]' # Lock this down to your Netlify URL after deployment!
+        value: '["*"]' # Update this after deployment!
+
+  # Legora Frontend (Static Site)
+  - type: static
+    name: legora-frontend
+    repo: https://github.com/NJVinay/legora-trust-architect
+    branch: main
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: legora-backend
+          property: url

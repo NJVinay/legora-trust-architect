@@ -109,36 +109,20 @@ Legora Trust-Architect is a cutting-edge legal AI prototype designed to demonstr
    npm run dev
    ```
 
-## 🌍 Deployment
+### Full Stack Deployment (Render)
 
-### 1. Backend (Container Platform: Render)
-
-The backend requires a Python environment with `faiss-cpu` (vector DB). We recommend **Render** for easy Docker deployment.
+Deploy both the Frontend and Backend to **Render** with a single click.
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/NJVinay/legora-trust-architect)
 
 1. Click the button above.
-2. Render will read the `render.yaml` blueprint.
+2. Render will read `render.yaml` and create two services:
+   - **legora-backend** (Docker API)
+   - **legora-frontend** (Static React Site)
 3. Input your **Azure OpenAI Keys** when prompted.
-4. Render will deploy the API and give you a URL (e.g., `https://legora-backend-abc.onrender.com`).
-5. **Copy this URL** — you will need it for the Frontend setup!
+4. **Done!** Render automatically links the frontend to the backend.
 
-**Alternative**: Deploy the `backend/` folder to any container platform (Railway, DigitalOcean) using the `backend/Dockerfile`.
-
-### 2. Frontend (Netlify)
-
-The frontend is a static React SPA optimized for Netlify.
-
-1. **Connect to Git**: Import this repository on Netlify.
-2. **Build Settings**:
-   - **Base directory**: `frontend`
-   - **Build command**: `npm run build`
-   - **Publish directory**: `dist`
-3. **Environment Variables** (Netlify Site Configuration):
-   - `VITE_API_URL`: The URL of your deployed backend (e.g., `https://legora-backend.onrender.com/api/v1`).
-   - `VITE_API_KEY`: The API key you configured in your backend.
-
-**Note**: The project includes a `netlify.toml` file to automatically handle SPA routing (`/* -> /index.html`).
+**Note**: The first deploy might take a few minutes. Once live, your frontend will be available at the URL provided by Render (e.g., `https://legora-frontend-xyz.onrender.com`).
 
 ## 🛡️ Security
 
