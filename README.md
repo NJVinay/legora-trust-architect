@@ -109,6 +109,34 @@ Legora Trust-Architect is a cutting-edge legal AI prototype designed to demonstr
    npm run dev
    ```
 
+## 🌍 Deployment
+
+### 1. Backend (Container Platform)
+
+The backend requires a Python environment with `faiss-cpu` (vector DB). Deploy the `backend/` folder to a container platform like **Render**, **Railway**, or **DigitalOcean App Platform**.
+
+- **Dockerfile**: Provided in `backend/Dockerfile`.
+- **Environment Variables**:
+  - `AZURE_OPENAI_API_KEY`: Your key.
+  - `AZURE_OPENAI_ENDPOINT`: Your endpoint.
+  - `JWT_SECRET`: A strong secret string.
+  - `CORS_ORIGINS`: Add your Netlify frontend URL (e.g., `["https://your-site.netlify.app"]`).
+
+### 2. Frontend (Netlify)
+
+The frontend is a static React SPA optimized for Netlify.
+
+1. **Connect to Git**: Import this repository on Netlify.
+2. **Build Settings**:
+   - **Base directory**: `frontend`
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
+3. **Environment Variables** (Netlify Site Configuration):
+   - `VITE_API_URL`: The URL of your deployed backend (e.g., `https://legora-backend.onrender.com/api/v1`).
+   - `VITE_API_KEY`: The API key you configured in your backend.
+
+**Note**: The project includes a `netlify.toml` file to automatically handle SPA routing (`/* -> /index.html`).
+
 ## 🛡️ Security
 
 - **Input Validation**: All inputs validated via Pydantic models.
