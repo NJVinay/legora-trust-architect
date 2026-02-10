@@ -28,21 +28,12 @@ services:
       - key: CORS_ORIGINS
         value: '["*"]' # Update this after deployment!
 
-  # Legora Frontend (Static Site)
-  - type: static
+  # Legora Frontend (Docker Web Service)
+  - type: web
     name: legora-frontend
     repo: https://github.com/NJVinay/legora-trust-architect
     branch: main
     rootDir: frontend
-    buildCommand: npm install && npm run build
-    publishPath: dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
     envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: legora-backend
-          property: url
+      - key: BACKEND_URL
+        value: http://legora-backend:8000
